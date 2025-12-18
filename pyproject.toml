@@ -26,3 +26,6 @@ dev = [
     "ruff (>=0.14.9,<0.15.0)",
     "pyinstaller (>=6.17.0,<7.0.0)"
 ]
+
+[tool.poetry.scripts]
+ytstreamer = "ytstreamer.main:main"
