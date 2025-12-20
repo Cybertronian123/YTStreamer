@@ -1,67 +1,74 @@
+import ctypes
 import customtkinter as ctk
 
 
 class TitleBar(ctk.CTkFrame):
-    HEIGHT = 36
+    HEIGHT = 32
 
     def __init__(self, master):
-        super().__init__(master, height=self.HEIGHT, corner_radius=0, fg_color="#403f3f")
 
-        self.master = master
-        self.pack(fill="x")
-        self.pack_propagate(False)
+        font_family = ctk.CTkFont("Rockybilly", 9)
+        super().__init__(
+            master,
+            height=self.HEIGHT,
+            corner_radius=20,
+            fg_color="#403f3f"
+        )
 
-        self._bind_drag()
+        self.grid_propagate(False)
 
-        # App title
+        # 🔹 Inner padding container
+        content = ctk.CTkFrame(self, fg_color="transparent")
+        content.pack(fill="both", expand=True, padx=12, pady=6)
+
+        # 🔹 Window drag (native, flicker-free)
+        content.bind("<Button-1>", self._start_native_move)
+
+        # 🔹 Title text
         ctk.CTkLabel(
-            self,
+            content,
             text="YTStreamer",
-            font=ctk.CTkFont(size=14, weight="bold")
-        ).pack(side="left", padx=12)
+            font=font_family,
+            text_color="#e5e7eb"
+        ).pack(side="left")
 
-        # Window buttons
-        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
-        btn_frame.pack(side="right")
+        # 🔹 Window buttons
+        btns = ctk.CTkFrame(content, fg_color="transparent")
+        btns.pack(side="right")
 
         ctk.CTkButton(
-            btn_frame,
+            btns,
             text="—",
             width=36,
-            height=28,
-            corner_radius=2,
-            command=self.minimize,
-            fg_color="#3094ff",
-            hover_color="#6dadf2",
+            height=24,
+            fg_color="transparent",
+            hover_color="#525252",
+            command=self._minimize
         ).pack(side="left", padx=4)
 
         ctk.CTkButton(
-            btn_frame,
+            btns,
             text="✕",
             width=36,
-            height=28,
-            corner_radius=2,
-            hover_color="#d14343",
-            fg_color="#db2323",
-            command=self.close
-        ).pack(side="left", padx=(0, 6))
+            height=24,
+            fg_color="transparent",
+            hover_color="#991b1b",
+            command=self._close
+        ).pack(side="left")
 
-    def minimize(self):
-        self.master.update_idletasks()
-        self.master.iconify()
+    def _start_native_move(self, event):
+        hwnd = ctypes.windll.user32.GetParent(self.winfo_toplevel().winfo_id())
 
-    def close(self):
-        self.master.destroy()
+        ctypes.windll.user32.ReleaseCapture()
+        ctypes.windll.user32.PostMessageW(
+            hwnd,
+            0x00A1,  # WM_NCLBUTTONDOWN
+            0x0002,  # HTCAPTION
+            0
+        )
 
-    def _bind_drag(self):
-        self.bind("<Button-1>", self._start_move)
-        self.bind("<B1-Motion>", self._on_move)
+    def _minimize(self):
+        self.winfo_toplevel().iconify()
 
-    def _start_move(self, event):
-        self.master.title_bar_offset_x = event.x
-        self.master.title_bar_offset_y = event.y
-
-    def _on_move(self, event):
-        x = event.x_root - self.master.title_bar_offset_x
-        y = event.y_root - self.master.title_bar_offset_y
-        self.master.geometry(f"+{x}+{y}")
+    def _close(self):
+        self.winfo_toplevel().destroy()
