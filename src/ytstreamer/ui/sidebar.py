@@ -4,22 +4,24 @@ import customtkinter as ctk
 class Sidebar(ctk.CTkFrame):
     def __init__(self, master, on_navigate):
         super().__init__(master, width=220)
-        self.on_navigate = on_navigate
         self.pack_propagate(False)
 
+        # 🔹 Inner padding container
+        content = ctk.CTkFrame(self, fg_color="transparent")
+        content.pack(fill="both", expand=True, padx=16, pady=16)
+
+        # App name / logo
         # ctk.CTkLabel(
-        #     self,
+        #     content,
         #     text="YTStreamer",
         #     font=ctk.CTkFont(size=20, weight="bold")
-        # ).pack(pady=(30, 20))
+        # ).pack(pady=(8, 24))
 
-        self._nav_button("Stemmer", "landing")
-
-    def _nav_button(self, text, page):
+        # Navigation button(s)
         ctk.CTkButton(
-            self,
-            text=text,
+            content,
+            text="Home",
             height=40,
             corner_radius=8,
-            command=lambda: self.on_navigate(page)
-        ).pack(fill="x", padx=20, pady=40)
+            command=lambda: on_navigate("home")
+        ).pack(fill="x", pady=6)
