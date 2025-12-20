@@ -7,13 +7,13 @@ class Sidebar(ctk.CTkFrame):
         self.on_navigate = on_navigate
         self.pack_propagate(False)
 
-        ctk.CTkLabel(
-            self,
-            text="YTStreamer",
-            font=ctk.CTkFont(size=20, weight="bold")
-        ).pack(pady=(30, 20))
+        # ctk.CTkLabel(
+        #     self,
+        #     text="YTStreamer",
+        #     font=ctk.CTkFont(size=20, weight="bold")
+        # ).pack(pady=(30, 20))
 
-        self._nav_button("Home", "landing")
+        self._nav_button("Stemmer", "landing")
 
     def _nav_button(self, text, page):
         ctk.CTkButton(
@@ -22,4 +22,4 @@ class Sidebar(ctk.CTkFrame):
             height=40,
             corner_radius=8,
             command=lambda: self.on_navigate(page)
-        ).pack(fill="x", padx=20, pady=6)
+        ).pack(fill="x", padx=20, pady=40)

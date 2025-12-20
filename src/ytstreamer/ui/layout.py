@@ -1,10 +1,13 @@
 import customtkinter as ctk
 from ytstreamer.ui.sidebar import Sidebar
 from ytstreamer.ui.pages.landing import LandingPage
+from ytstreamer.ui.titlebar import TitleBar
 
 class AppLayout(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
+
+        TitleBar(master)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
