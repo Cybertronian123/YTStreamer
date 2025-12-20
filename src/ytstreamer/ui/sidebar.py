@@ -10,14 +10,6 @@ class Sidebar(ctk.CTkFrame):
         content = ctk.CTkFrame(self, fg_color="transparent")
         content.pack(fill="both", expand=True, padx=16, pady=16)
 
-        # App name / logo
-        # ctk.CTkLabel(
-        #     content,
-        #     text="YTStreamer",
-        #     font=ctk.CTkFont(size=20, weight="bold")
-        # ).pack(pady=(8, 24))
-
-        # Navigation button(s)
         ctk.CTkButton(
             content,
             text="Stemmer",
