@@ -3,7 +3,7 @@ import customtkinter as ctk
 
 class Sidebar(ctk.CTkFrame):
     def __init__(self, master, on_navigate):
-        super().__init__(master, width=220)
+        super().__init__(master, width=220, corner_radius=0)
         self.pack_propagate(False)
 
         # 🔹 Inner padding container
@@ -20,8 +20,8 @@ class Sidebar(ctk.CTkFrame):
         # Navigation button(s)
         ctk.CTkButton(
             content,
-            text="Home",
+            text="Stemmer",
             height=40,
-            corner_radius=8,
-            command=lambda: on_navigate("home")
+            corner_radius=10,
+            command=lambda: on_navigate("landing")
         ).pack(fill="x", pady=6)

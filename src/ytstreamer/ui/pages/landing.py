@@ -5,7 +5,7 @@ from pathlib import Path
 
 class LandingPage(ctk.CTkFrame):
     def __init__(self, master):
-        super().__init__(master)
+        super().__init__(master, corner_radius=0)
 
         self.audio_path: Path | None = None
         self.output_dir: Path | None = None
@@ -13,11 +13,11 @@ class LandingPage(ctk.CTkFrame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        outer = ctk.CTkFrame(self)
+        outer = ctk.CTkFrame(self, corner_radius=0)
         outer.grid(row=0, column=0, padx=40, pady=40)
         outer.grid(padx=40, pady=40)
 
-        content = ctk.CTkFrame(outer, fg_color="transparent")
+        content = ctk.CTkFrame(outer, fg_color="transparent", corner_radius=0)
         content.grid(row=0, column=0, padx=30, pady=30)
         content.grid(padx=30, pady=30)
 
@@ -36,7 +36,8 @@ class LandingPage(ctk.CTkFrame):
         ctk.CTkButton(
             content,
             text="Browse",
-            command=self.pick_audio
+            command=self.pick_audio,
+            corner_radius=5,
         ).grid(row=2, column=2, padx=(10, 0))
 
         # Output folder picker
@@ -47,14 +48,16 @@ class LandingPage(ctk.CTkFrame):
         ctk.CTkButton(
             content,
             text="Browse",
-            command=self.pick_output
+            command=self.pick_output,
+            corner_radius=5,
         ).grid(row=4, column=2, padx=(10, 0))
 
         # Stem selector
         ctk.CTkLabel(content, text="Stems").grid(row=5, column=0, sticky="w", pady=(16, 0))
         self.stems = ctk.CTkOptionMenu(
             content,
-            values=["2", "4", "5"]
+            values=["2", "4", "5"],
+            corner_radius=5,
         )
         self.stems.set("2")
         self.stems.grid(row=6, column=0, sticky="w")

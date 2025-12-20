@@ -11,7 +11,7 @@ class TitleBar(ctk.CTkFrame):
         super().__init__(
             master,
             height=self.HEIGHT,
-            corner_radius=20,
+            corner_radius=0,
             fg_color="#403f3f"
         )
 

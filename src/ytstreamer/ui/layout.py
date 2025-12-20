@@ -7,7 +7,7 @@ from ytstreamer.ui.pages.landing import LandingPage
 
 class AppLayout(ctk.CTkFrame):
     def __init__(self, master):
-        super().__init__(master)
+        super().__init__(master, corner_radius=0)
         self.pack(fill="both", expand=True)
 
         # 🔹 Grid layout
